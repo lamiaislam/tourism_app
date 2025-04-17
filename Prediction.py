@@ -96,7 +96,7 @@ if 'prediction' in locals():
 
 
 
-# Email Subscription
+# Email Subscription for future work
 st.markdown("### 📧 Subscribe for Overcrowding Alerts")
 
 with st.form("subscribe_form"):
