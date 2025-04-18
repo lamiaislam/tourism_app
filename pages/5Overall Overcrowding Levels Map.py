@@ -46,16 +46,11 @@ data['Overcrowding_Level'] = data.apply(
 
 data.dropna(subset=['Overcrowding_Level'], inplace=True)
 
-# (Optional) Map Visualization: show locations with high overcrowding
-# If latitude/longitude were available or can be derived from Postcode, we could use st.map or folium map here.
+
 # from IPython.display import IFrame
 
 # Display the HTML map in the notebook
 # IFrame(src='uk_overcrowding_map.html', width='100%', height=600)
-
-# >>> import plotly.express as px
-# >>> fig = px.box(range(10))
-# >>> fig.write_html('test.html')
 
 st.header("Overall Overcrowding Levels Map")
 
