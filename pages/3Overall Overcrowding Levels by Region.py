@@ -1,20 +1,16 @@
 import streamlit as st
 import pandas as pd
-
 import numpy as np
 import joblib
 import re
 import matplotlib.pyplot as plt
 
-
 from common_page import show_common_page
 
 show_common_page()
 
-
 # Load the pre-trained model pipeline and data
 model = joblib.load('overcrowding_model_pipeline.pkl')
-# data = pd.read_csv('tourist_attraction.csv').replace("Not available", pd.NA)
 
 data = pd.read_csv('tourist_attraction.csv')
 
@@ -44,16 +40,11 @@ def categorize_overcrowding(visitors_2023, bracket):
         else:
             return None
 
-
-
 data['Overcrowding_Level'] = data.apply(
     lambda row: categorize_overcrowding(row['Visitors_2023'], row['Visitor admission brackets']), axis=1
 )
 
 data.dropna(subset=['Overcrowding_Level'], inplace=True)
-
-
-
 
 # Main panel: Data Visualizations
 st.subheader("Overall Overcrowding Levels by Region")
@@ -65,12 +56,6 @@ st.dataframe(region_pivot.style.format("{:.1f}%"))  # show as percentage table
 region_visitors = data.groupby('Region')['Visitors_2023'].sum().reset_index()
 region_visitors = region_visitors.dropna()  # drop regions with no data
 st.bar_chart(region_visitors.set_index('Region')['Visitors_2023'])
-
-
-
-
-
-
 
 st.subheader("📊 Histogram: Number of Attractions by Category")
 

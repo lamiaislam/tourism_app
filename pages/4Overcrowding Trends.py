@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-
 import numpy as np
 import joblib
 import re
@@ -9,11 +8,8 @@ from common_page import show_common_page
 
 show_common_page()
 
-
-
 # Load the pre-trained model pipeline and data
 model = joblib.load('overcrowding_model_pipeline.pkl')
-# data = pd.read_csv('tourist_attraction.csv').replace("Not available", pd.NA)
 
 data = pd.read_csv('tourist_attraction.csv')
 
@@ -43,17 +39,11 @@ def categorize_overcrowding(visitors_2023, bracket):
         else:
             return None
 
-
-
 data['Overcrowding_Level'] = data.apply(
     lambda row: categorize_overcrowding(row['Visitors_2023'], row['Visitor admission brackets']), axis=1
 )
 
 data.dropna(subset=['Overcrowding_Level'], inplace=True)
-
-
-
-
 
 st.subheader("Overcrowding Trends (2018-2023)")
 

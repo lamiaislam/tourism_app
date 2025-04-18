@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
-
 import numpy as np
 import joblib
 import re
+from datetime import datetime
 
 st.set_page_config(
         page_title="Tourist Tracker",
@@ -12,13 +12,6 @@ st.set_page_config(
 from common_page import show_common_page
 
 show_common_page()
-
-# Load the pre-trained model pipeline and data
-import streamlit as st
-import pandas as pd
-import numpy as np
-import joblib
-from datetime import datetime
 
 # Load the trained model pipeline
 model = joblib.load("overcrowding_model_pipeline.pkl")
@@ -84,8 +77,6 @@ if st.button("🔮 Predict Overcrowding"):
     else:
         st.success("✅ Safe to be visited.")
 
-
-
 if 'prediction' in locals():
     # Suggest alternatives if overcrowding is high
     if prediction == "High":
@@ -93,7 +84,6 @@ if 'prediction' in locals():
         st.html(
             "<a href='#suggested-alt' style='color:lawngreen;'><h4>🧭 Suggested Alternatives<h4></a>"
         )
-
 
 # Suggest alternatives if overcrowding is high
 
