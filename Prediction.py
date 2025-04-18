@@ -95,50 +95,9 @@ if 'prediction' in locals():
         )
 
 
-
-# Email Subscription
-st.markdown("### 📧 Subscribe for Overcrowding Alerts")
-
-with st.form("subscribe_form"):
-    st.markdown("Want to receive alerts if the **crowding level changes** for this location?")
-    
-    user_email = st.text_input("Enter your email address:")
-    submit = st.form_submit_button("🔔 Subscribe for Alerts")
-    
-    def is_valid_email(email):
-        return re.match(r"[^@]+@[^@]+\.[^@]+", email)
-
-    if submit:
-        if not st.session_state.get("prediction"):
-            st.warning("⚠️ Please make a prediction first before subscribing.")
-        elif not is_valid_email(user_email):
-            st.warning("⚠️ Please enter a valid email address.")
-        else:
-            subscription = pd.DataFrame([{
-                "Email": user_email,
-                "Region": region,
-                "District": district,
-                "Attraction": attraction,
-                "Prediction": st.session_state.prediction,
-                "Date": future_date
-            }])
-            try:
-                subscription.to_csv("subscriptions.csv", mode='a', header=not pd.io.common.file_exists("subscriptions.csv"), index=False)
-                st.success(f"✅ Subscribed! You’ll be notified if crowding at **{attraction}** changes.")
-            except Exception as e:
-                st.error("❌ Failed to save your subscription.")
-                st.exception(e)
-
-# Sidebar inputs for prediction
-
-
-
-
-
-
+# Suggest alternatives if overcrowding is high
 
 if 'prediction' in locals():
-    # Suggest alternatives if overcrowding is high
     if prediction == "High":
         
         with st.sidebar:
