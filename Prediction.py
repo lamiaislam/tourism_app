@@ -16,6 +16,40 @@ show_common_page()
 # Load the trained model pipeline
 model = joblib.load("overcrowding_model_pipeline.pkl")
 
+# Rebuild the pipeline in code instead of loading
+from sklearn.pipeline import Pipeline
+from xgboost import XGBClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
+
+# Define numeric processing
+numeric_features = ['Visitors_2019', 'Visitors_2021', 'Visitors_2022']
+numeric_transformer = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler', StandardScaler())
+])
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numeric_transformer, numeric_features)
+    ]
+)
+
+pipeline = Pipeline([
+    ('preprocess', preprocessor),
+    ('classifier', XGBClassifier(n_estimators=100, eval_metric='mlogloss', use_label_encoder=False))
+])
+
+# Now fit or use your pipeline here
+# pipeline.fit(X_train, y_train)
+
+
+
+
+
+
+
 # Load dataset
 data = pd.read_csv("tourist_attraction.csv").replace("Not available", np.nan)
 
